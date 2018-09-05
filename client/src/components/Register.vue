@@ -1,6 +1,6 @@
 <template lang='pug'>
-    v-layout
-        v-flex(xs6,offset-xs3)
+    v-layout(justify-center,mt-4)
+        v-flex(xs12,md6)
             .white.elevation-2
                 v-toolbar.cyan(dark,flat,dense)
                     v-toolbar-title Register
@@ -11,6 +11,7 @@
                     v-text-field(type='password', label="password",v-model="password",:rules="[rules.required]")
                     br
                     v-btn(dark, @click='register').cyan Register
+                    
 
 </template>
 
@@ -23,6 +24,7 @@ export default {
         return {
             email: '',
             password: '',
+            error: null,
             rules: {
                 required: value => !!value || 'Required.',
                 counter: value => value.length <= 20 || 'Max 20 characters',
@@ -37,12 +39,16 @@ export default {
     methods: {
         async register() {
             try{
-                await AuthenticationService.register({
+                let signUp = await AuthenticationService.register({
                     email: this.email,
                     password: this.password
                 })
+                console.log(signUp)
+                this.error = signUp.data
+
+                this.$router.push({name: 'songs'})
             }catch(e){
-                console.log(e)
+                this.error = e
             }
             
         }

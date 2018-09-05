@@ -1,6 +1,6 @@
 <template lang='pug'>
-    v-layout
-        v-flex(xs6,offset-xs3)
+    v-layout(justify-center,mt-4)
+        v-flex(xs12,md6)
             .white.elevation-2
                 v-toolbar.cyan(dark,flat,dense)
                     v-toolbar-title Login
@@ -10,17 +10,20 @@
                     br
                     v-text-field(type='password', label="Password",v-model="password",:rules="[rules.required]")
                     br
-                    v-btn.cyan(dark) Login
+                    v-btn.cyan(dark,@click='login') Login
 
 </template>
 
 
 <script>
+import AuthenticationService from '../services/AuthenticationService.js'
+
 export default {
     data() {
         return {
             email:'',
             password: '',
+            error: null,
             rules: {
                 required: value => !!value || 'Required.',
                 counter: value => value.length <= 20 || 'Max 20 characters',
@@ -31,6 +34,24 @@ export default {
             }
         }
     
+    },
+    methods: {
+        async login() {
+            try{
+                let logged = await AuthenticationService.login({
+                    email: this.email,
+                    password: this.password
+                })
+                console.log(logged)
+                // this.error = signUp.data
+
+                // this.$router.push({name: 'songs'})
+            }catch(e){
+                console.log(e)
+                this.error = e
+            }
+            
+        }
     }
 }
 </script>

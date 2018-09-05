@@ -8,12 +8,27 @@
         v-toolbar-items
             v-btn(dark,flat,:to="{ name: 'register'}").cyan Sign up
             v-btn(dark,flat,:to="{ name: 'login'}").cyan Login
+            v-btn(dark,flat, @click='logOut').cyan Log Out
 
 </template>
 
 <script>
+import AuthenticationService from '../services/AuthenticationService.js'
+
 export default {
-    
+    methods: {
+        async logOut() {
+            console.log('登出中')
+            try{
+                await AuthenticationService.log_out()
+                this.$router.push({name: 'songs'})
+            }
+            catch(err){
+                console.log(err)
+            }
+            
+        }
+    }
 }
 </script>
 

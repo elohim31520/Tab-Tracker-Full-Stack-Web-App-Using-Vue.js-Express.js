@@ -17,5 +17,6 @@ firebaseAdmin.initializeApp({
     databaseURL: process.env.FIREBASE_DATABASEURL,
 });
 
-const firebase = firebaseAdmin
-module.exports = firebase
+const db = firebaseAdmin.database()
+
+module.exports = db

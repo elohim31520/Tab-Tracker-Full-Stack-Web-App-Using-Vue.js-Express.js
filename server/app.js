@@ -7,6 +7,9 @@ var cors = require('cors')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var registerRouter = require('./routes/register')
+var loginRouter = require('./routes/login')
+var logOutRouter = require('./routes/logOut')
 
 var app = express();
 
@@ -19,9 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/register', registerRouter);
+app.use('/login', loginRouter);
+app.use('/logOut', logOutRouter);
 
-app.post('/register',(req,res) => {
-    console.log(req.body)
-    res.send('hello there')
-})
 module.exports = app;
