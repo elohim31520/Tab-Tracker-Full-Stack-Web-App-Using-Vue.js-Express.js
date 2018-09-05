@@ -8,7 +8,7 @@
                 .px-4.py-2
                     v-text-field(label="Email",v-model="email",:rules="[rules.required, rules.email]")
                     br
-                    v-text-field(label="Password",v-model="password",:rules="[rules.required]")
+                    v-text-field(type='password', label="Password",v-model="password",:rules="[rules.required]")
                     br
                     v-btn.cyan(dark) Login
 

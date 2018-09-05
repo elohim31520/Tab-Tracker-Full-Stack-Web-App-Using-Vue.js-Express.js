@@ -8,18 +8,20 @@
                 .px-4.py-2
                     v-text-field(label="Email",v-model="email",:rules="[rules.required, rules.email]")
                     br
-                    v-text-field(label="password",v-model="password",:rules="[rules.required]")
+                    v-text-field(type='password', label="password",v-model="password",:rules="[rules.required]")
                     br
-                    v-btn.cyan(dark) Register
+                    v-btn(dark, @click='register').cyan Register
 
 </template>
 
 
 <script>
+import AuthenticationService from '../services/AuthenticationService.js'
+
 export default {
     data() {
         return {
-            email:'',
+            email: '',
             password: '',
             rules: {
                 required: value => !!value || 'Required.',
@@ -31,6 +33,19 @@ export default {
             }
         }
     
+    },
+    methods: {
+        async register() {
+            try{
+                await AuthenticationService.register({
+                    email: this.email,
+                    password: this.password
+                })
+            }catch(e){
+                console.log(e)
+            }
+            
+        }
     }
 }
 </script>

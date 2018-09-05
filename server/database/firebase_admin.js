@@ -1,5 +1,5 @@
 const firebaseAdmin = require('firebase-admin')
-const dotenv = require('dotenv')
+require('dotenv').config()
 
 firebaseAdmin.initializeApp({
     credential: firebaseAdmin.credential.cert({
@@ -17,6 +17,5 @@ firebaseAdmin.initializeApp({
     databaseURL: process.env.FIREBASE_DATABASEURL,
 });
 
-const db = firebaseAdmin.database()
-
-module.exports = db
+const firebase = firebaseAdmin
+module.exports = firebase
