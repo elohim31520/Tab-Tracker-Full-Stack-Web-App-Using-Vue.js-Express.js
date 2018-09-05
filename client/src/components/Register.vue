@@ -39,12 +39,12 @@ export default {
     methods: {
         async register() {
             try{
-                let signUp = await AuthenticationService.register({
+                let response = await AuthenticationService.register({
                     email: this.email,
                     password: this.password
                 })
-                console.log(signUp)
-                this.error = signUp.data
+                console.log(response)
+                this.error = response
 
                 this.$router.push({name: 'songs'})
             }catch(e){

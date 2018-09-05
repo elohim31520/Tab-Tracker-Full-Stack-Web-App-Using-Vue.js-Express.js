@@ -18,9 +18,10 @@ import AuthenticationService from '../services/AuthenticationService.js'
 export default {
     methods: {
         async logOut() {
-            console.log('登出中')
+            // console.log('登出中')
             try{
                 await AuthenticationService.log_out()
+                console.log('登出成功')
                 this.$router.push({name: 'songs'})
             }
             catch(err){

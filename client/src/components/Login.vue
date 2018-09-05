@@ -38,15 +38,18 @@ export default {
     methods: {
         async login() {
             try{
-                let logged = await AuthenticationService.login({
+                let response = await AuthenticationService.login({
                     email: this.email,
                     password: this.password
                 })
-                console.log(logged)
-                // this.error = signUp.data
 
-                // this.$router.push({name: 'songs'})
-            }catch(e){
+                // console.log("登入成功",response)
+                if(response.data.email){
+
+                }
+                this.$router.push({name: 'songs'})
+            }
+            catch(e){
                 console.log(e)
                 this.error = e
             }
