@@ -1,17 +1,13 @@
 <template lang='pug'>
     v-layout(justify-center,mt-4)
         v-flex(xs12,md6)
-            .white.elevation-2
-                v-toolbar.cyan(dark,flat,dense)
-                    v-toolbar-title Register
-
-                .px-4.py-2
-                    v-text-field(label="Email",v-model="email",:rules="[rules.required, rules.email]")
-                    br
-                    v-text-field(type='password', label="password",v-model="password",:rules="[rules.required]")
-                    br
-                    v-btn(dark, @click='register').cyan Register
-                    
+            Panel(title='Register')
+                v-text-field(label="Email",v-model="email",:rules="[rules.required, rules.email]")
+                br
+                v-text-field(type='password', label="password",v-model="password",:rules="[rules.required]")
+                br
+                v-btn(dark, @click='register').cyan Register
+                v-alert(v-if='error',:value='true',type="error") {{error}}
 
 </template>
 
@@ -43,13 +39,14 @@ export default {
                     email: this.email,
                     password: this.password
                 })
-                console.log(response)
-                this.error = response
-
+                // console.log(response)
+                this.$store.dispatch('setToken',response.data.token)
                 this.$router.push({name: 'songs'})
-            }catch(e){
-                console.log(e)
-                this.error = e
+            }catch(error){
+                console.log(error)
+                if(error){
+                    this.error = 'you must provide a valid email or password , password at least must be 6 charactors'
+                }
             }
             
         }

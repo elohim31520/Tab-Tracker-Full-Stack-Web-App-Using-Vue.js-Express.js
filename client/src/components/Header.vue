@@ -6,23 +6,30 @@
             v-btn(dark,flat).cyan Browse
         v-spacer
         v-toolbar-items
-            v-btn(dark,flat,:to="{ name: 'register'}").cyan Sign up
-            v-btn(dark,flat,:to="{ name: 'login'}").cyan Login
-            v-btn(dark,flat, @click='logOut').cyan Log Out
+            v-btn(dark,flat,:to="{ name: 'register'}",v-if='!isLoggedIn').cyan Sign up
+            v-btn(dark,flat,:to="{ name: 'login'}",v-if='!isLoggedIn').cyan Login
+            v-btn(dark,flat, @click='logout',v-if='isLoggedIn').cyan Log Out
 
 </template>
 
 <script>
 import AuthenticationService from '../services/AuthenticationService.js'
+import {mapState} from 'vuex' 
 
 export default {
+    computed :{
+        ...mapState(['isLoggedIn'])
+    },
     methods: {
-        async logOut() {
-            // console.log('登出中')
+        async logout() {
             try{
-                await AuthenticationService.log_out()
-                console.log('登出成功')
-                this.$router.push({name: 'songs'})
+                let response = await AuthenticationService.log_out()
+                if(response){
+                    this.$store.dispatch('setTokentoNull')
+                    console.log(response.data)
+                    this.$router.push({name: 'songs'})
+                    
+                }
             }
             catch(err){
                 console.log(err)
