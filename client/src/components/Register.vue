@@ -48,6 +48,7 @@ export default {
 
                 this.$router.push({name: 'songs'})
             }catch(e){
+                console.log(e)
                 this.error = e
             }
             

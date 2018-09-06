@@ -43,15 +43,13 @@ export default {
                     password: this.password
                 })
 
-                // console.log("登入成功",response)
-                if(response.data.email){
-
-                }
                 this.$router.push({name: 'songs'})
+                
+                
             }
             catch(e){
                 console.log(e)
-                this.error = e
+            
             }
             
         }
