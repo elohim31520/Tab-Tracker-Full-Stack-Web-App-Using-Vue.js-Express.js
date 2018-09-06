@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken')
 router.post('/', async (req, res) => {
     const { email, password } = req.body
     try {
-        // 檢查是否登入
+        // 檢查登入狀態
         let user = await firebase.auth().currentUser
         if (user) {
             // User is signed in.
@@ -19,9 +19,10 @@ router.post('/', async (req, res) => {
         else {
             // No user is signed in.
             // console.log(email)
-            // 檢查密碼
+            // 註冊
             await firebase.auth().signInWithEmailAndPassword(email, password)
             console.log("登入成功")
+            // 回傳jwt token
             let token = jwt.sign({email:email,password:password},'secret')
             res.send({
                 token: token

@@ -13,29 +13,33 @@ router.post('/', email_validate , async (req, res) => {
     const saltRound = 8
     
     try{
-        // 檢查是否登入
+        // 檢查登入狀態
         let user = await firebase.auth().currentUser
         if (user){
-            // 登入狀態
+            // 已登入的狀態
             res.send('already logged')
         }
         else{
-            // 並無登入狀態，嘗試註冊
+            // 並無登入狀態，註冊
             await firebase.auth().createUserWithEmailAndPassword(email,password)
             console.log("註冊成功")
             // hash password
             let encryptPassword = await bcrypt.hash(password,saltRound)
             
-            // 再次檢查狀態
+            // 再次檢查登入狀態
             firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
                     // User is signed in.
                     console.log('已登入')
+
+                    // 設定user資訊，push 一個 user database 欄位
                     let userEmail= firebase.auth().currentUser.email
                     let userId = firebase.auth().currentUser.uid
                     var userDatakey = firebaseAdminDb.ref('users').push().key
                     userDatakey = userId
-                    console.log(userDatakey)
+                    // console.log(userDatakey)
+
+                    // 把user資訊寫入database
                     firebaseAdminDb.ref('users').child(userDatakey).set({
                         userid: userId,
                         email: userEmail,

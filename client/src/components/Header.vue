@@ -1,9 +1,9 @@
 <template lang='pug'>
     v-toolbar(dark,fixed).cyan
         v-toolbar-title.mr-4
-            router-link(tag="span",:to="{name: 'songs'}").home  Tab Tracker
+            router-link(tag="span",:to="{name: 'root'}").home  Tab Tracker
         v-toolbar-items
-            v-btn(dark,flat).cyan Browse
+            v-btn(dark,flat,:to="{ name: 'songs'}").cyan Browse
         v-spacer
         v-toolbar-items
             v-btn(dark,flat,:to="{ name: 'register'}",v-if='!isLoggedIn').cyan Sign up

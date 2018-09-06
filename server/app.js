@@ -9,7 +9,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registerRouter = require('./routes/register')
 var loginRouter = require('./routes/login')
-var logOutRouter = require('./routes/logOut')
+var logOutRouter = require('./routes/logout')
+var songsRouter = require('./routes/songs')
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
-app.use('/logOut', logOutRouter);
+app.use('/logout', logOutRouter);
+app.use('/songs', songsRouter);
 
 module.exports = app;

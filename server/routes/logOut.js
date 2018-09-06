@@ -5,9 +5,11 @@ var firebase = require('../database/firebase_connection')
 
 
 router.post('/', async (req, res) => {
+    // 檢查登入狀態
     let user = await firebase.auth().currentUser
     if(user){
         try{
+            //登出
             await firebase.auth().signOut()
             console.log('登出成功')
             res.end()
