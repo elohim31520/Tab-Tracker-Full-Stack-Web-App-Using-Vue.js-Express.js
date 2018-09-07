@@ -10,13 +10,13 @@
                 v-text-field(label='youtube Url',v-model='song.youtubeId',:rules="[rules.required]")
         v-flex(xs12,md7)
             Panel(title='Song Structure').ml-4
-                v-textarea(label='lyrics',v-model='song.lyrics',:rules="[rules.required]",multi-line)
+                v-textarea(label='lyrics',v-model='song.lyrics',:rules="[rules.required]",multi-line,clearable)
                 br
                 br
-                v-textarea(label='tab',v-model='song.tab',multi-line)
+                v-textarea(label='tab',v-model='song.tab',multi-line,clearable)
                 br
                 v-btn(dark, @click='create').cyan Create
-                
+            v-alert.mt-4(v-if='error',:value='true',type="error") {{error}}
 </template>
 
 <script>
@@ -25,6 +25,7 @@ import SongService from '../services/SongService.js'
 export default {
     data () {
         return {
+            error:'',
             song:{
                 title: '',
                 artist: '',
@@ -41,9 +42,36 @@ export default {
         }
     },
     methods: {
+        checkBlank(){
+            let song_key = Object.values(this.song)
+            // console.log(song_key)
+            let status = true
+            for(let i=0;i<song_key.length;i++){
+                if(song_key[i] == '' || song_key[i]==null){
+                    status = false
+                }
+            }
+
+            return status
+        },
         async create(){
-            await SongService.createSong(this.song)
-            this.$router.push({name: 'songs'})
+            let willsendReq = this.checkBlank()
+            console.log(willsendReq)
+            if(willsendReq){
+                try{
+                    await SongService.createSong(this.song)
+                    this.$router.push({name: 'songs'})
+                }catch(err){
+                    console.log(err)
+                }
+            }else{
+                console.log('請檢查是否填寫完整');
+                this.error = '請檢查是否填寫完整'
+                
+            }
+            
+            
+            
         }
     }
 }

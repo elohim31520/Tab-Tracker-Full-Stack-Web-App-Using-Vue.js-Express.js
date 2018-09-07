@@ -35,25 +35,28 @@ export default {
     },
     methods: {
         async login() {
-            try{
-                let response = await AuthenticationService.login({
-                    email: this.email,
-                    password: this.password
-                })
-                console.log(response.data.token)
-                this.$store.dispatch('setToken',response.data.token)
-                this.$router.push({name: 'songs'})
-                
-                
-            }
-            catch(err){
-                console.log(err)
-                if(err){
-                    this.error = 'you must provide a valid email,password format' 
+            if(this.email !=='' && this.password !== ''){
+                try{
+                    let response = await AuthenticationService.login({
+                        email: this.email,
+                        password: this.password
+                    })
+                    console.log(response.data.token)
+                    this.$store.dispatch('setToken',response.data.token)
+                    this.$router.push({name: 'songs'})
+                    
+                    
                 }
-            
+                catch(err){
+                    console.log(err)
+                    if(err){
+                        this.error = 'you must provide a valid email,password format' 
+                    }
+                
+                }
+            }else{
+                this.error = '請勿空白'
             }
-            
         }
     }
 }

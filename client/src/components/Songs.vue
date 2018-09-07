@@ -6,7 +6,7 @@
 
 
                 v-flex(xs12)
-                    v-card(color="#FBFBFB",dark, v-for='(song,index) in songs',:key='index').mb-4
+                    v-card(color="#FBFBFB",dark, v-for='(song,index) in songs',:key='index+1').mb-4
                         v-layout
                             v-flex(xs5)
                                 v-img(:src="song.albumImageUrl",width="100%",contain)

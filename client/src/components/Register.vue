@@ -34,20 +34,27 @@ export default {
     },
     methods: {
         async register() {
-            try{
-                let response = await AuthenticationService.register({
-                    email: this.email,
-                    password: this.password
-                })
-                // console.log(response)
-                this.$store.dispatch('setToken',response.data.token)
-                this.$router.push({name: 'songs'})
-            }catch(error){
-                console.log(error)
-                if(error){
-                    this.error = 'you must provide a valid email or password , password at least must be 6 charactors'
+            // 如果email password為空白，就不請求
+            if(this.email !=='' && this.password !== ''){
+                try{
+                    let response = await AuthenticationService.register({
+                        email: this.email,
+                        password: this.password
+                    })
+                    // console.log(response)
+                    this.$store.dispatch('setToken',response.data.token)
+                    this.$router.push({name: 'songs'})
+                }catch(error){
+                    console.log(error)
+                    if(error){
+                        this.error = 'you must provide a valid email or password , password at least must be 6 charactors'
+                    }
                 }
+            }else{
+                this.error='請勿空白'
             }
+
+            
             
         }
     }
