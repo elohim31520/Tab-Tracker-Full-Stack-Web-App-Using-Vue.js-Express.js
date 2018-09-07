@@ -6,7 +6,7 @@
 
 
                 v-flex(xs12)
-                    v-card(color="#FBFBFB",dark, v-for='(song,index) in songs',:key='index+1').mb-4
+                    v-card(color="#FBFBFB",dark, v-for='(song,index) in songs',:key='keys[index]').mb-4
                         v-layout
                             v-flex(xs5)
                                 v-img(:src="song.albumImageUrl",width="100%",contain)
@@ -18,6 +18,8 @@
                                     p {{song.artist}}
                                     br
                                     p {{song.genre}}
+                                v-btn(dark,@click='viewTheSong(index)').cyan.margin-bottom View Detail
+                            
             
 </template> 
 
@@ -27,14 +29,23 @@ import SongService from '../services/SongService.js'
 export default {
     data(){
         return {
-            songs:[]    
+            songs:[],
+            keys: []    
         }
     },
     props: ['title'],
     async mounted (){
         let response = await SongService.getSongs()
         // console.log(response)
+
+        // 把firebase回傳值 key value 分離
         this.songs = Object.values(response.data)
+        this.keys = Object.keys(response.data)
+    },
+    methods:{
+        viewTheSong(songId){
+            this.$router.push({ path: `/songs/${this.keys[songId]}` })
+        }
     }
 }
 </script>
@@ -42,16 +53,21 @@ export default {
 <style lang='sass'>
 .relative
     position: relative
+
     .size
         font-size: 3rem
         line-height: 3rem
         cursor: pointer
         right: 1rem
         top: 5px
+
     .song-description
         display: flex
-        flex-wrap: wrap
-        align-items: center
-        color: #6a6a6a
+        flex-direction: column
         justify-content: center
+        color: #6a6a6a
+        align-items: center
+
+        .margin-bottom
+            margin-bottom: 2rem
 </style>
