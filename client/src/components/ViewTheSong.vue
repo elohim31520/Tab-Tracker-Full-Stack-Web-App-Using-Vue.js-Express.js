@@ -16,6 +16,7 @@
                                     p {{song.artist}}
                                     br
                                     p {{song.genre}}
+                                v-btn(dark,@click='editTheSong').mb-4.cyan Edit
 
             //- youtube embed  src="https://www.youtube.com/embed/PcbOFqi1LF4" "https://www.youtube.com/watch?v=khXkLs0TqdY"
             v-flex(md6).ml-4
@@ -28,6 +29,7 @@
                 Panel(title='Lyrics')
                     textarea(readonly,v-model='song.lyrics').textarea
 
+            //- Tab
             v-flex(md6).ml-4
                 Panel(title='Tab')
                     textarea(readonly,v-model='song.tab').textarea
@@ -50,13 +52,19 @@ export default {
             let songId = this.$store.state.route.params.id
             this.song = (await SongService.showSpecificSong(songId)).data
 
-
             // 回傳後對youtube url 作一些處理
             this.videoId = getIdFromURL(this.song.youtubeId)
-            console.log(this.videoId)
+            // console.log(this.videoId)
         }
         catch(err){
             console.log('get song 發生錯誤',err)
+        }
+        
+    },
+    methods:{
+        async editTheSong() {
+            await this.$store.dispatch('setTheViewingData',this.song)
+            this.$router.push({name: 'edit-the-song'})
         }
         
     }
@@ -70,10 +78,11 @@ export default {
             color: #646464
 
     .textarea
-        width: 100%
+        width: 70%
         height: 100%
         height: 600px
         border-style: none
         border-color: transparent
         overflow: auto
+        font-size: 20px
 </style>

@@ -34,10 +34,10 @@ router.post('/',  async (req, res) => {
 
 // GET 特定:id 的 歌曲
 router.get('/:id',async (req,res)=>{
-    console.log(req.params.id)
+    // console.log(req.params.id)
     try{
         let song = await firebaseAdminDb.ref(`Songs`).child(req.params.id).once('value')
-        console.log('資料在這裡',song.val())
+        // console.log('資料在這裡',song.val())
         res.send(song.val())
     }
     catch(err){
@@ -45,6 +45,18 @@ router.get('/:id',async (req,res)=>{
     }
 })
 
-
+// POST 更新 特定:id 的 歌曲資料
+router.post('/:id',async (req,res)=>{
+    // console.log('Req資料',req.body)
+    try{
+        let song = await firebaseAdminDb.ref(`Songs`).child(req.params.id).update(req.body)
+        // res.send(song.val())
+        console.log('更新成功')
+        res.send('更新成功')
+    }
+    catch(err){
+        console.log('抓取特定ID歌曲時出錯',err)
+    }
+})
 
 module.exports = router;

@@ -9,5 +9,8 @@ export default {
     },
     showSpecificSong(songId){
         return Api().get(`songs/${songId}`)
+    },
+    updateSong(songId,data){
+        return Api().post(`songs/${songId}`,data)
     }
 }

@@ -7,27 +7,33 @@ export default new Vuex.Store({
     strict: true,
     state: {
         token: '',
-        isLoggedIn: false
+        isLoggedIn: false,
+        nowViewingSong: {}
     },
-    mutations:{
-        setToken(state,token){
+    mutations: {
+        setToken(state, token) {
             // console.log("來自action的請求")
             state.token = token
             state.isLoggedIn = true
             // console.log(state.token)
         },
-        setTokentoNull(state){
+        setTokentoNull(state) {
             state.isLoggedIn = false
             state.token = null
+        },
+        setTheViewingData(state,songData) {
+            state.nowViewingSong = songData
         }
     },
-    actions:{
-        setToken({ commit },token){
-            // console.log('有呼叫vuex',token)
-            commit('setToken',token)
+    actions: {
+        setToken({ commit }, token) {
+            commit('setToken', token)
         },
-        setTokentoNull({ commit }){
+        setTokentoNull({ commit }) {
             commit('setTokentoNull')
+        },
+        setTheViewingData({ commit }, songData) {
+            commit('setTheViewingData',songData)
         }
     }
 
