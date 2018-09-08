@@ -1,11 +1,17 @@
 <template lang='pug'>   
-    v-layout(justify-center,mt-4)
-        v-flex(xs12,md8)
+    v-layout(mt-4,wrap,justify-center)
+        
+        //- serch container
+        v-flex(x12,md7,justify-center)
+            SongSerch
+
+        //- card container
+        v-flex(mt-4,x12,md7)
             Panel(title='Songs').relative
                 v-btn(small,fab,dark,color="teal lighten-3",absolute,:to='{name: "create-song"}').size +
 
-
-                v-flex(xs12)
+                //- card
+                v-flex
                     v-card(color="#FBFBFB",dark, v-for='(song,index) in songs',:key='keys[index]').mb-4
                         v-layout
                             v-flex(xs5)
@@ -19,14 +25,18 @@
                                     br
                                     p {{song.genre}}
                                 v-btn(dark,@click='viewTheSong(index)').cyan.margin-bottom View Detail
-                            
+                                
             
 </template> 
 
 <script>
 import SongService from '../services/SongService.js'
+import SongSerch from './songs/SongSerch'
 
 export default {
+    components:{
+        SongSerch
+    },
     data(){
         return {
             songs:[],
@@ -41,6 +51,10 @@ export default {
         // 把firebase回傳值 key value 分離
         this.songs = Object.values(response.data)
         this.keys = Object.keys(response.data)
+        
+        // 最新資料在最前面，reverse
+        this.songs = this.songs.reverse()
+        this.keys = this.keys.reverse()
     },
     methods:{
         viewTheSong(songId){

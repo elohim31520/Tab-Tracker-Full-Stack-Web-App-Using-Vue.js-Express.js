@@ -39,5 +39,13 @@ export default new Router({
       component: ViewTheSong
     }
 
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    // return 期望滚动到哪个的位置
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
