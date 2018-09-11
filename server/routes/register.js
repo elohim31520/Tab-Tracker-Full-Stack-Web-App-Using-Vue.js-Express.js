@@ -3,6 +3,8 @@ const router = express.Router();
 const firebaseAdminDb = require('../database/firebase_admin')
 const firebase = require('../database/firebase_connection')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 // 驗證email password 格式
 const email_validate = require('../validator/email_validate')
@@ -45,7 +47,14 @@ router.post('/', email_validate , async (req, res) => {
                         email: userEmail,
                         password: encryptPassword
                     })
-                    res.end()
+                    
+                    // 回傳jwt token
+                    let token = jwt.sign({email:email,password:password},process.env.SECRET,{expiresIn: 7*24*60*60*1000})
+                    res.send({
+                        token: token
+                    })
+
+
                 } else {
                     // No user is signed in.
                     res.send('invalid Register')

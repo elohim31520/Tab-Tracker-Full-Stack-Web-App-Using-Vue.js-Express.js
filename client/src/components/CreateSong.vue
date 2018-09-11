@@ -58,7 +58,6 @@ export default {
         },
         async create(){
             let willsendReq = this.checkBlank()
-            console.log(willsendReq)
             if(willsendReq){
                 try{
                     await SongService.createSong(this.song)

@@ -3,6 +3,7 @@ var router = express.Router();
 const firebaseAdminDb = require('../database/firebase_admin')
 const firebase = require('../database/firebase_connection')
 // const songs_data_validate = require('../validator/songs_data_validate')
+const verifyToken = require('../middleware/verifyToken')
 
 /* GET Songs page. */
 router.get('/', (req, res) => {
@@ -18,8 +19,11 @@ router.get('/', (req, res) => {
 
 
 // POST song data 寫入資料庫
-router.post('/',  async (req, res) => {
+router.post('/',verifyToken,  async (req, res) => {
+    console.log(req.user)
+    req.body.createdBy = req.user
     let songs = req.body
+
     try{
         let songkey = await firebaseAdminDb.ref('Songs').push().key
         await firebaseAdminDb.ref('Songs').child(songkey).set(songs)
@@ -46,8 +50,10 @@ router.get('/:id',async (req,res)=>{
 })
 
 // POST 更新 特定:id 的 歌曲資料
-router.post('/:id',async (req,res)=>{
+router.post('/:id',verifyToken, async (req,res)=>{
     // console.log('Req資料',req.body)
+    req.body.updatedBy = req.user
+    
     try{
         let song = await firebaseAdminDb.ref(`Songs`).child(req.params.id).update(req.body)
         // res.send(song.val())

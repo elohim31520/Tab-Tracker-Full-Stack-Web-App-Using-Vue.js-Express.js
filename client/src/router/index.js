@@ -14,6 +14,8 @@ export default new Router({
     {
       path: '/',
       name: 'root',
+      redirect: '/songs',
+      component: Songs
     },
     {
       path: '/register',

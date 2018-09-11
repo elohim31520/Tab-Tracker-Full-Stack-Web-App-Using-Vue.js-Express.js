@@ -16,7 +16,7 @@
                                     p {{song.artist}}
                                     br
                                     p {{song.genre}}
-                                v-btn(dark,@click='editTheSong').mb-4.cyan Edit
+                                v-btn(dark,@click='editTheSong',v-if='isLoggedIn').mb-4.cyan Edit
 
             //- youtube embed  src="https://www.youtube.com/embed/PcbOFqi1LF4" "https://www.youtube.com/watch?v=khXkLs0TqdY"
             v-flex(md6).ml-4
@@ -39,6 +39,7 @@
 <script>
 import SongService from '../services/SongService.js'
 import { getIdFromURL, getTimeFromURL } from 'vue-youtube-embed'
+import {mapState} from 'vuex' 
 
 export default {
     data () {
@@ -46,6 +47,9 @@ export default {
             song: {},
             videoId: ''
         }
+    },
+    computed :{
+        ...mapState(['isLoggedIn'])
     },
     async mounted(){
         try{

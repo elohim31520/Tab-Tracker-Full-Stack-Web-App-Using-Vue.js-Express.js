@@ -8,7 +8,7 @@
         //- card container
         v-flex(mt-4,x12,md7)
             Panel(title='Songs').relative
-                v-btn(small,fab,dark,color="teal lighten-3",absolute,:to='{name: "create-song"}').size +
+                v-btn(small,fab,dark,color="teal lighten-3",absolute,:to='{name: "create-song"}',v-if='isLoggedIn').size +
 
                 //- card
                 v-flex
@@ -32,6 +32,7 @@
 <script>
 import SongService from '../services/SongService.js'
 import SongSerch from './songs/SongSerch'
+import {mapState} from 'vuex' 
 
 export default {
     components:{
@@ -42,6 +43,9 @@ export default {
             songs:[],
             keys: []    
         }
+    },
+    computed :{
+        ...mapState(['isLoggedIn'])
     },
     props: ['title'],
     async mounted (){
