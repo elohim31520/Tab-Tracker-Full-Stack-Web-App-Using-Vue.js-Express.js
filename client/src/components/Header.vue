@@ -3,7 +3,8 @@
         v-toolbar-title.mr-4
             router-link(tag="span",:to="{name: 'root'}").home  Song Share
         v-toolbar-items
-            v-btn(dark,flat,:to="{ name: 'songs'}",v-if='isLoggedIn').cyan Bookmark
+            v-btn(dark,flat,:to="{ name: 'bookmark'}",v-if='isLoggedIn').cyan Bookmark
+            v-btn(dark,flat,:to="{ name: 'create-song'}",v-if='isLoggedIn').cyan Create
         v-spacer
         v-toolbar-items
             v-btn(dark,flat,:to="{ name: 'register'}",v-if='!isLoggedIn').cyan Sign up

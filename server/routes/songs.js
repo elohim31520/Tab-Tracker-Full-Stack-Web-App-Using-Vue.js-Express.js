@@ -65,4 +65,47 @@ router.post('/:id',verifyToken, async (req,res)=>{
     }
 })
 
+// POST 設定書籤
+router.post('/:id/bookmark',verifyToken, async (req,res)=>{
+
+    // 把mail帳號設為firebase的key
+    let user = req.user.email.split('@')
+    // console.log(user)
+
+    try{
+        // 把mail帳號設為firebase的key
+        let account_key = await firebaseAdminDb.ref('Bookmark').push().key
+        // user[0]就是帳號，設為key
+        account_key = user[0]
+        // 再帳號抵下再嵌套一層
+        let songkey = await firebaseAdminDb.ref('Bookmark').child(account_key).push().key
+        // 把歌曲的key val 設為一樣
+        songkey = req.params.id
+        // 設定bookmark 裡面song的id
+        await firebaseAdminDb.ref(`Bookmark/${account_key}`).child(songkey).set(req.params.id)
+
+        console.log('更新成功')
+        res.send('更新成功')
+    }
+    catch(err){
+        console.log('設定書籤時發生錯誤',err)
+    }
+})
+
+
+// 刪除書籤
+router.delete('/:id/deleteBookmark',verifyToken, async (req,res)=>{
+
+    // 帳號設為firebase的key
+    let user = req.user.email.split('@')
+    try{
+        // 抓到帳號 firebase的key
+        await firebaseAdminDb.ref(`Bookmark/${user[0]}`).child(req.params.id).remove()
+        console.log('書籤刪除成功')
+        res.send('書籤刪除成功')
+    }
+    catch(err){
+        console.log('設定書籤時發生錯誤',err)
+    }
+})
 module.exports = router;

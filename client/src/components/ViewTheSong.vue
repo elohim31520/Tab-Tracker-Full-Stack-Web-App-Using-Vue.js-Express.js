@@ -17,6 +17,10 @@
                                     br
                                     p {{song.genre}}
                                 v-btn(dark,@click='editTheSong',v-if='isLoggedIn').mb-4.cyan Edit
+                                v-btn(dark,@click='setAsBookmark',v-if='!isBooked').mb-4.cyan
+                                    v-icon(v-text="icon").icon_booked_style.
+                                v-btn(dark,@click='unSetAsBookmark',v-if='isBooked').mb-4.deep-orange.darken-1
+                                    v-icon(v-text="icon").icon_booked_style.
 
             //- youtube embed  src="https://www.youtube.com/embed/PcbOFqi1LF4" "https://www.youtube.com/watch?v=khXkLs0TqdY"
             v-flex(md6).ml-4
@@ -45,11 +49,18 @@ export default {
     data () {
         return {
             song: {},
-            videoId: ''
+            videoId: '',
+            isBooked: false
         }
     },
     computed :{
         ...mapState(['isLoggedIn'])
+    },
+    props: {
+        icon: {
+            type: String,
+            default: '$vuetify.icons.bookmark'
+        }
     },
     async mounted(){
         try{
@@ -66,9 +77,30 @@ export default {
         
     },
     methods:{
+        // 編輯歌曲
         async editTheSong() {
             await this.$store.dispatch('setTheViewingData',this.song)
             this.$router.push({name: 'edit-the-song'})
+        },
+        // 設為書籤
+        async setAsBookmark() {
+            try{
+                let id = this.$route.params.id
+                await SongService.setThisSongAsbookMark(id)
+                this.isBooked = true
+            }catch(err){
+                console.log('設為書籤有錯誤',err)
+            }
+        },
+        // 刪除書籤
+        async unSetAsBookmark() {
+            try{
+                let id = this.$route.params.id
+                await SongService.unSetThisSongAsbookMark(id)
+                this.isBooked = false
+            }catch(err){
+                console.log('取消書籤時發生錯誤',err)
+            }
         }
         
     }
@@ -89,4 +121,8 @@ export default {
         border-color: transparent
         overflow: auto
         font-size: 20px
+
+
+    .icon_booked_style
+
 </style>

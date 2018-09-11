@@ -6,6 +6,8 @@ import Songs from "../components/Songs"
 import CreateSong from '../components/CreateSong'
 import ViewTheSong from '../components/ViewTheSong'
 import EditTheSong from '../components/EditTheSong'
+import Bookmark from '../components/Bookmark'
+
 
 Vue.use(Router)
 
@@ -46,6 +48,11 @@ export default new Router({
       path: '/songs/:id/edit',
       name: 'edit-the-song',
       component: EditTheSong
+    },
+    {
+      path: '/bookmark',
+      name: 'bookmark',
+      component: Bookmark
     }
 
   ],

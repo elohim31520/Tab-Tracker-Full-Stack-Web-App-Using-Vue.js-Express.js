@@ -9,9 +9,14 @@ import {sync} from 'vuex-router-sync'
 import store from './store/store'
 import Panel from './components/global/Panel.vue'
 import VueYouTubeEmbed from 'vue-youtube-embed'
+import '@fortawesome/fontawesome-free/css/all.css'
 
-
-Vue.use(Vuetify)
+Vue.use(Vuetify,{
+  iconfont: 'fa',
+  icons: {
+    'bookmark': 'far fa-bookmark'
+  }
+})
 Vue.use(VueYouTubeEmbed)
 
 Vue.config.productionTip = false

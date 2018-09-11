@@ -24,10 +24,8 @@ router.post('/', async (req, res) => {
             console.log("登入成功")
             
             // 回傳jwt token
-            let token = jwt.sign({email:email,password:password},process.env.SECRET,{expiresIn: 7*24*60*60*1000})
-            res.send({
-                token: token
-            })
+            let token = jwt.sign({email},process.env.SECRET,{expiresIn: 7*24*60*60*1000})
+            res.send({ token })
     
             // res.status(403).send('密碼錯誤')
             

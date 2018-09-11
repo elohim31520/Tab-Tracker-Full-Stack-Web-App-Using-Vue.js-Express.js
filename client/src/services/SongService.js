@@ -12,5 +12,11 @@ export default {
     },
     updateSong(songId,data){
         return Api().post(`songs/${songId}`,data)
+    },
+    setThisSongAsbookMark(songId){
+        return Api().post(`songs/${songId}/bookmark`)
+    },
+    unSetThisSongAsbookMark(songId){
+        return Api().delete(`songs/${songId}/deleteBookmark`)
     }
 }
