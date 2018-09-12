@@ -3,7 +3,7 @@
 
         //- card container
         v-flex(mt-4,x12,md7)
-            Panel(title='Your Bookmark List').relative
+            Panel(title='Your Bookmark List').relative 
 
                 //- card
                 v-flex

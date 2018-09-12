@@ -4,7 +4,7 @@
             v-toolbar-title {{title}}
 
         .px-4.py-2
-            slot
+            slot no data...
 </template>
 
 <script>

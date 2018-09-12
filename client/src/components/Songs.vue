@@ -11,35 +11,35 @@
                 v-btn(small,fab,dark,color="teal lighten-3",absolute,:to='{name: "create-song"}',v-if='isLoggedIn').size +
 
                 //- card
-                v-flex
-                    v-card(color="#FBFBFB",dark, v-for='(song,index) in songs',:key='keys[index]',v-if='!serchSong').mb-4
-                        v-layout
-                            v-flex(xs5)
-                                v-img(:src="song.albumImageUrl",width="100%",contain)
-                        
-                            v-flex(xs7).song-description
-                                div.mt-4
-                                    h1 {{song.title}}
-                                    br
-                                    p {{song.artist}}
-                                    br
-                                    p {{song.genre}}
-                                v-btn(dark,@click='viewTheSong(index)').cyan.margin-bottom View Detail
+                
+                v-card(color="#FBFBFB",dark, v-for='(song,index) in songs',:key='keys[index]',v-if='!serchSong').mb-4
+                    v-layout.flex_rwd
+                        v-flex(md5).flex_rwd_img
+                            v-img(:src="song.albumImageUrl",width="100%",contain)
+                    
+                        v-flex(md7).song-description
+                            div.mt-4
+                                h1 {{song.title}}
+                                br
+                                p {{song.artist}}
+                                br
+                                p {{song.genre}}
+                            v-btn(dark,@click='viewTheSong(index)').cyan.margin-bottom View Detail
                 //- 搜尋後的資料，v-if 控制
-                v-flex
-                    v-card(color="#FBFBFB",dark, v-for='(song,index) in serchSong',:key='keys[index]',v-if='serchSong').mb-4
-                        v-layout
-                            v-flex(xs5)
-                                v-img(:src="song.albumImageUrl",width="100%",contain)
-                        
-                            v-flex(xs7).song-description
-                                div.mt-4
-                                    h1 {{song.title}}
-                                    br
-                                    p {{song.artist}}
-                                    br
-                                    p {{song.genre}}
-                                v-btn(dark,@click='viewTheSong(index)').cyan.margin-bottom View Detail
+                
+                v-card(color="#FBFBFB",dark, v-for='(song,index) in serchSong',:key='keys[index]',v-if='serchSong').mb-4
+                    v-layout.flex_rwd
+                        v-flex(md5).flex_rwd_img
+                            v-img(:src="song.albumImageUrl",width="100%",contain).flex_rwd_img
+                    
+                        v-flex(md7).song-description
+                            div.mt-4
+                                h1 {{song.title}}
+                                br
+                                p {{song.artist}}
+                                br
+                                p {{song.genre}}
+                            v-btn(dark,@click='viewTheSong(index)').cyan.margin-bottom View Detail
 
                 
                                 
@@ -106,4 +106,15 @@ export default {
 
         .margin-bottom
             margin-bottom: 2rem
+
+    .flex_rwd
+        @media screen and (max-width:420px)
+            display: flex
+            flex-direction: column
+            align-items: center
+
+            .flex_rwd_img
+                width: 100%
+                margin-top: 2rem
+                // height: 20rem
 </style>

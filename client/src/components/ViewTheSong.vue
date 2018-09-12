@@ -1,8 +1,8 @@
 <template lang='pug'>
     .veiw-the-song
-        v-layout
+        v-layout(row)
             //- song card
-            v-flex(md6)
+            v-flex(xs12,md6)
                 Panel(title='About The Song')
                     v-card(color="#FBFBFB",dark).mb-4
                         v-layout
@@ -17,24 +17,26 @@
                                     br
                                     p {{song.genre}}
                                 v-btn(dark,@click='editTheSong',v-if='isLoggedIn').mb-4.cyan Edit
+                                //- 書籤-尚未設為書籤的樣式
                                 v-btn(dark,@click='setAsBookmark',v-if='!isBooked').mb-4.cyan
                                     v-icon(v-text="icon").icon_booked_style.
+                                    //- 已設為書籤的樣式
                                 v-btn(dark,@click='unSetAsBookmark',v-if='isBooked').mb-4.deep-orange.darken-1
                                     v-icon(v-text="icon").icon_booked_style.
 
-            //- youtube embed  src="https://www.youtube.com/embed/PcbOFqi1LF4" "https://www.youtube.com/watch?v=khXkLs0TqdY"
-            v-flex(md6).ml-4
+            //- youtube
+            v-flex(xs12,md6).ml-4
                 Panel(title='Youtube')
-                    youtube(:video-id="videoId")
+                    youtube(:video-id="videoId",player-width='90%')
 
-        v-layout.mt-5
+        v-layout(row).mt-5
             //- lyrics
-            v-flex(md6)
+            v-flex(xs12,md6)
                 Panel(title='Lyrics')
                     textarea(readonly,v-model='song.lyrics').textarea
 
             //- Tab
-            v-flex(md6).ml-4
+            v-flex(xs12,md6).ml-4
                 Panel(title='Tab')
                     textarea(readonly,v-model='song.tab').textarea
 
@@ -112,6 +114,7 @@ export default {
 
 <style lang='sass'>
 .veiw-the-song
+    width: 100%
     div
         h1, p
             color: #646464
