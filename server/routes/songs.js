@@ -17,6 +17,39 @@ router.get('/', (req, res) => {
     }
 });
 
+// 搜尋
+router.get('/search/:id', async (req,res)=>{
+    // console.log(req.params.id)
+    const keyword =req.params.id
+    // 關鍵字不為空才搜尋
+    if(keyword !='' && keyword !=' '){
+        try{
+            let songs = await firebaseAdminDb.ref('Songs').once('value')
+            // songs 所有歌曲的value裝成一個陣列，裡面都是obj
+            let songValues = Object.values(songs.val())
+            // keys 是values裡面要過濾的項目
+            let keys = ['album','artist','title','genre']
+            // 過濾含有keyword的項目
+            let data = songValues.filter((obj)=>{
+                for(i=0;i<keys.length;i++){
+                    // console.log(obj[keys[i]].toLowerCase().indexOf(keyword.toLowerCase()))
+                    // 如果有找到，返回該物件
+                    if(obj[keys[i]].toLowerCase().indexOf(keyword.toLowerCase()) !=-1){
+                        return obj
+                    }    
+                }
+            })
+            // console.log(data)
+            res.send(data)
+    
+        }catch(err){
+            console.log('搜尋時發生錯誤',err)
+        }
+    }
+    res.send('關鍵字不可為空')
+})
+
+
 
 // POST song data 寫入資料庫
 router.post('/',verifyToken,  async (req, res) => {
@@ -108,5 +141,8 @@ router.delete('/:id/deleteBookmark',verifyToken, async (req,res)=>{
         console.log('設定書籤時發生錯誤',err)
     }
 })
+
+
+
 
 module.exports = router;

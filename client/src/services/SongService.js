@@ -24,5 +24,8 @@ export default {
     },
     checkIsbooked(songId){
         return Api().get(`bookmark/${songId}`)
+    },
+    searchSong(keyword){
+        return Api().get(`songs/search/${keyword}`)
     }
 }

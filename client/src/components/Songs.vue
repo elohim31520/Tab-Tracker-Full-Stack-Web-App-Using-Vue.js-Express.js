@@ -3,7 +3,7 @@
         
         //- serch container
         v-flex(x12,md7,justify-center)
-            SongSerch
+            SongSerch(@sendingSerchData='serchSong = arguments[0]')
 
         //- card container
         v-flex(mt-4,x12,md7)
@@ -12,7 +12,7 @@
 
                 //- card
                 v-flex
-                    v-card(color="#FBFBFB",dark, v-for='(song,index) in songs',:key='keys[index]').mb-4
+                    v-card(color="#FBFBFB",dark, v-for='(song,index) in songs',:key='keys[index]',v-if='!serchSong').mb-4
                         v-layout
                             v-flex(xs5)
                                 v-img(:src="song.albumImageUrl",width="100%",contain)
@@ -25,6 +25,23 @@
                                     br
                                     p {{song.genre}}
                                 v-btn(dark,@click='viewTheSong(index)').cyan.margin-bottom View Detail
+                //- 搜尋後的資料，v-if 控制
+                v-flex
+                    v-card(color="#FBFBFB",dark, v-for='(song,index) in serchSong',:key='keys[index]',v-if='serchSong').mb-4
+                        v-layout
+                            v-flex(xs5)
+                                v-img(:src="song.albumImageUrl",width="100%",contain)
+                        
+                            v-flex(xs7).song-description
+                                div.mt-4
+                                    h1 {{song.title}}
+                                    br
+                                    p {{song.artist}}
+                                    br
+                                    p {{song.genre}}
+                                v-btn(dark,@click='viewTheSong(index)').cyan.margin-bottom View Detail
+
+                
                                 
             
 </template> 
@@ -41,6 +58,7 @@ export default {
     data(){
         return {
             songs:[],
+            serchSong: null,
             keys: []    
         }
     },
