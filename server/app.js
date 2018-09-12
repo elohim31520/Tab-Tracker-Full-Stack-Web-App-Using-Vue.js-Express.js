@@ -11,6 +11,7 @@ var registerRouter = require('./routes/register')
 var loginRouter = require('./routes/login')
 var logOutRouter = require('./routes/logout')
 var songsRouter = require('./routes/songs')
+var bookmarkRouter = require('./routes/bookmark')
 
 var app = express();
 
@@ -27,5 +28,6 @@ app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logOutRouter);
 app.use('/songs', songsRouter);
+app.use('/bookmark', bookmarkRouter);
 
 module.exports = app;

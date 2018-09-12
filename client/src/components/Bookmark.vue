@@ -26,34 +26,29 @@
 
 <script>
 import SongService from '../services/SongService.js'
-import SongSerch from './songs/SongSerch'
 import {mapState} from 'vuex' 
 
 export default {
-    components:{
-        SongSerch
-    },
     data(){
         return {
             songs:[],
-            keys: []    
+            keys: []
         }
     },
     computed :{
         ...mapState(['isLoggedIn'])
     },
     props: ['title'],
-    async mounted (){
-        let response = await SongService.getSongs()
-        // console.log(response)
-
-        // 把firebase回傳值 key value 分離
-        this.songs = Object.values(response.data)
-        this.keys = Object.keys(response.data)
+    async mounted() {
+        try{
+            let bookMarkData = await SongService.getBookmarkSongs()
+            console.log(bookMarkData.data)
+            this.songs = bookMarkData.data.values
+            this.keys = bookMarkData.data.keys
         
-        // 最新資料在最前面，reverse
-        this.songs = this.songs.reverse()
-        this.keys = this.keys.reverse()
+        }catch(err){
+            console.log('取得書籤資料發生錯誤',err)
+        }
     },
     methods:{
         viewTheSong(songId){

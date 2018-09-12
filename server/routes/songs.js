@@ -96,7 +96,7 @@ router.post('/:id/bookmark',verifyToken, async (req,res)=>{
 // 刪除書籤
 router.delete('/:id/deleteBookmark',verifyToken, async (req,res)=>{
 
-    // 帳號設為firebase的key
+    // 帳號為firebase bookmark的key
     let user = req.user.email.split('@')
     try{
         // 抓到帳號 firebase的key
@@ -108,4 +108,5 @@ router.delete('/:id/deleteBookmark',verifyToken, async (req,res)=>{
         console.log('設定書籤時發生錯誤',err)
     }
 })
+
 module.exports = router;

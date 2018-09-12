@@ -66,10 +66,13 @@ export default {
         try{
             let songId = this.$store.state.route.params.id
             this.song = (await SongService.showSpecificSong(songId)).data
-
             // 回傳後對youtube url 作一些處理
             this.videoId = getIdFromURL(this.song.youtubeId)
-            // console.log(this.videoId)
+            // 檢查書籤
+            if(this.isLoggedIn){
+                let bookmark = await SongService.checkIsbooked(songId)
+                this.isBooked = bookmark.data
+            }
         }
         catch(err){
             console.log('get song 發生錯誤',err)

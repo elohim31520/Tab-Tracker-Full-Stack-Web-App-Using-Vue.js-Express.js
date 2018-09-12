@@ -18,5 +18,11 @@ export default {
     },
     unSetThisSongAsbookMark(songId){
         return Api().delete(`songs/${songId}/deleteBookmark`)
+    },
+    getBookmarkSongs(){
+        return Api().get('bookmark')
+    },
+    checkIsbooked(songId){
+        return Api().get(`bookmark/${songId}`)
     }
 }
